@@ -19,6 +19,19 @@ package org.springframework.aop;
 import java.lang.reflect.Method;
 
 /**
+ * Pointcut的一部分；检测是否目标方法是否有资格增强。
+ *
+ * MethodMatcher可以静态赋值或者运行时赋值（动态地）。
+ * 静态匹配包括方法和（或者）方法属性。动态匹配考虑调用的参数，以及连接点之前生效的通知的影响。
+ *
+ * 如果#isRuntime()方法返回false，赋值会静态执行，方法的所有调用的结果都是相同的。这意味着三参数方法
+ * #matches(java.lang.reflect.Method, Class, Object[])永远不会调用。
+ *
+ * 如果双参数方法#matches(java.lang.reflect.Method, Class)和#isRuntime()都返回true，那么三参数方法
+ * #matches(java.lang.reflect.Method, Class, Object[])会立刻在任何相关的advice之前调用以决定advice
+ * 是否增强。
+ *
+ *
  * Part of a {@link Pointcut}: Checks whether the target method is eligible for advice.
  *
  * <p>A MethodMatcher may be evaluated <b>statically</b> or at <b>runtime</b> (dynamically).
@@ -48,6 +61,10 @@ import java.lang.reflect.Method;
 public interface MethodMatcher {
 
 	/**
+	 * 执行静态检查，是否指定方法匹配成功。
+	 * 如果这个方法返回false或#isRuntime()返回false，不会进行运行时检查
+	 * （不会调用#matches(java.lang.reflect.Method, Class, Object[])方法）
+	 *
 	 * Perform static checking whether the given method matches.
 	 * <p>If this returns {@code false} or if the {@link #isRuntime()}
 	 * method returns {@code false}, no runtime check (i.e. no
@@ -89,6 +106,8 @@ public interface MethodMatcher {
 
 
 	/**
+	 * 匹配所有方法的实例
+	 *
 	 * Canonical instance that matches all methods.
 	 */
 	MethodMatcher TRUE = TrueMethodMatcher.INSTANCE;
