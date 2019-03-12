@@ -17,6 +17,11 @@
 package org.springframework.aop;
 
 /**
+ * 核心spring切点抽象。
+ *
+ * 一个切点是ClassFilter和MethodMatcher的组合。
+ * ClassFilter和MethodMatcher和切点自身可以组合在一起如ComposablePoint。
+ *
  * Core Spring pointcut abstraction.
  *
  * <p>A pointcut is composed of a {@link ClassFilter} and a {@link MethodMatcher}.
