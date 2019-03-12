@@ -19,6 +19,15 @@ package org.aopalliance.intercept;
 import java.lang.reflect.AccessibleObject;
 
 /**
+ * 这个接口代表一个一般的运行时连接点（AOP专业术语）。
+ *
+ * 运行时连接点是一个事件，发生在一个静止不动的连接点上（如程序中的定位）。例如，一次
+ * 调用是一个方法上（静止不动的连接点）的运行时连接点。给定的连接点精致不动的部分可以通过
+ * 方法#getStaticPart()获取。
+ *
+ * 在拦截器框架的上下文中，一个运行时连接点是可访问对象（方法，构造器，域）的一次访问的具体化。
+ * 它会传给那些安装在静止不动连接点上的拦截器中。
+ *
  * This interface represents a generic runtime joinpoint (in the AOP
  * terminology).
  *
@@ -40,6 +49,8 @@ import java.lang.reflect.AccessibleObject;
 public interface Joinpoint {
 
 	/**
+	 * 继续执行链上的下一个拦截器。
+	 * 方法的语义和实现依赖于连接点的类型（查看子类接口）。
 	 * Proceed to the next interceptor in the chain.
 	 * <p>The implementation and the semantics of this method depends
 	 * on the actual joinpoint type (see the children interfaces).
@@ -49,6 +60,8 @@ public interface Joinpoint {
 	Object proceed() throws Throwable;
 
 	/**
+	 * 返回持有当前连接点静止不动部分的对象。
+	 * 例如，方法调用的目标对象。
 	 * Return the object that holds the current joinpoint's static part.
 	 * <p>For instance, the target object for an invocation.
 	 * @return the object (can be null if the accessible object is static)
@@ -56,6 +69,8 @@ public interface Joinpoint {
 	Object getThis();
 
 	/**
+	 * 返回连接点的静止不动的部分。
+	 * 静止不动的部分指一个可访问对象，它持有一个拦截器链。
 	 * Return the static part of this joinpoint.
 	 * <p>The static part is an accessible object on which a chain of
 	 * interceptors are installed.
