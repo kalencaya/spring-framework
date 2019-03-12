@@ -47,6 +47,7 @@ final class TrueMethodMatcher implements MethodMatcher, Serializable {
 		return true;
 	}
 
+	//#isRuntime()返回false，则应该永远不会在调用这个方法， MethodMatcher接口有详细注释说明
 	@Override
 	public boolean matches(Method method, Class<?> targetClass, Object... args) {
 		// Should never be invoked as isRuntime returns false.
