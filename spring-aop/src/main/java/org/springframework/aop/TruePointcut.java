@@ -29,6 +29,7 @@ final class TruePointcut implements Pointcut, Serializable {
 	public static final TruePointcut INSTANCE = new TruePointcut();
 
 	/**
+	 * 使用单例模式
 	 * Enforce Singleton pattern.
 	 */
 	private TruePointcut() {
@@ -45,6 +46,9 @@ final class TruePointcut implements Pointcut, Serializable {
 	}
 
 	/**
+	 * 为了支持序列化。在反序列化的时候取代具体的实例，保护单例模式。
+	 * 序列化和反序列化会破坏单例模式，添加一个readResolve()方法可以避免这种情况
+	 *
 	 * Required to support serialization. Replaces with canonical
 	 * instance on deserialization, protecting Singleton pattern.
 	 * Alternative to overriding {@code equals()}.
